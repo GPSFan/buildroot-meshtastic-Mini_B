@@ -34,10 +34,10 @@ Default credentials: `root` : `luckfox`
 `   ./build.sh
 `
 5. Flash the image to the Mini_B's SPI
-`
-   ./rkflash.sh erase
-   ./rkflash.sh update
-`
+
+    ./rkflash.sh erase
+    ./rkflash.sh update
+
 ---
 
 # What's Included?
