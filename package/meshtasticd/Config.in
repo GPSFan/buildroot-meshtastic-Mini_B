@@ -22,8 +22,10 @@ config BR2_PACKAGE_MESHTASTICD
 	select BR2_PACKAGE_ARGP_STANDALONE if BR2_TOOLCHAIN_USES_UCLIBC || BR2_TOOLCHAIN_USES_MUSL
 	select BR2_PACKAGE_ZLIB
 	select BR2_PACKAGE_LOGROTATE
+	select BR2_PACKAGE_I2C_TOOLS
+	select BR2_PACKAGE_LIBUSB
 	help
-	  meshtasticd portduino
+	  meshtasticd portduino-buildroot
 
 	  https://meshtastic.org/docs/software/linux-native/
 

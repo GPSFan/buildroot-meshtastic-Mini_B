@@ -6,7 +6,15 @@
 # See https://bootlin.com/~thomas/site/buildroot/adding-packages.html#generic-package-tutorial
 
 # renovate: datasource=github-releases depName=meshtasticd packageName=meshtastic/firmware versioning=semver-coerced
-MESHTASTICD_VERSION = v2.5.14.f2ee0df
+#MESHTASTICD_VERSION = v2.5.13.295278b  # ok
+#MESHTASTICD_VERSION = v2.5.13.1a06f88  # ok
+#MESHTASTICD_VERSION = v2.5.14.f2ee0df  # ok
+#MESHTASTICD_VERSION = v2.5.15.79da236  # ok
+#MESHTASTICD_VERSION = v2.5.16.f81d3b0  # fails on first patch, remove patch #1, still fails now looking for gpiod dependency
+#MESHTASTICD_VERSION = v2.5.17.b4b2fd6  # adds portduino-buildroot variant. Must delete the femtofox folder from meshtasticd.asdfasdf/bin/config.d
+MESHTASTICD_VERSION = v2.5.18.89ebafc  # Must delete the femtofox folder from meshtasticd.asdfasdf/bin/config.d
+
+
 MESHTASTICD_SITE = https://github.com/meshtastic/firmware
 MESHTASTICD_SITE_METHOD = git
 MESHTASTICD_GIT_SUBMODULES = YES
@@ -43,6 +51,7 @@ MESHTASTICD_DEPENDENCIES += \
 	host-pkgconf \
 	$(TARGET_NLS_DEPENDENCIES) \
 	libgpiod \
+	libusb \
 	yaml-cpp \
 	zlib \
 	bluez5_utils
@@ -50,6 +59,7 @@ MESHTASTICD_DEPENDENCIES += \
 # Flags
 MESHTASTICD_PLATFORMIO_BUILD_FLAGS = \
 	-std=c++17 \
+        -Os -ffunction-sections -fdata-sections -Wl,--gc-sections \
 	$(TARGET_NLS_LIBS)
 
 MESHTASTICD_PLATFORMIO_CFLAGS = \
@@ -82,7 +92,7 @@ MESHTASTICD_DEPENDENCIES += \
 	gnutls
 MESHTASTICD_PLATFORMIO_BUILD_FLAGS += \
 	`$(PKG_CONFIG_HOST_BINARY) --libs libulfius` \
-	`$(PKG_CONFIG_HOST_BINARY) --libs openssl`
+	`$(PKG_CONFIG_HOST_BINARY) --libs openssl`  
 endif
 
 # For avahi auto-discovery (optional)
@@ -108,11 +118,11 @@ define MESHTASTICD_BUILD_CMDS
 	PLATFORMIO_BUILD_FLAGS="$(MESHTASTICD_PLATFORMIO_BUILD_FLAGS)" \
 	PLATFORMIO_CACHE_DIR="$(DL_DIR)/.platformio_cache" \
 	PLATFORMIO_BUILD_CACHE_DIR="$(BUILD_DIR)/.platformio_build_cache" \
-	$(HOST_DIR)/bin/python3 -m platformio run --environment native --project-dir $(@D)
+	$(HOST_DIR)/bin/python3 -m platformio run --environment buildroot --project-dir $(@D)
 endef
 
 define MESHTASTICD_INSTALL_TARGET_CMDS
-	$(INSTALL) -D -m 0755 $(@D)/.pio/build/native/program $(TARGET_DIR)/usr/sbin/meshtasticd
+	$(INSTALL) -D -m 0755 $(@D)/.pio/build/buildroot/program $(TARGET_DIR)/usr/sbin/meshtasticd
 	$(INSTALL) -d -m 0755 $(TARGET_DIR)/etc/meshtasticd/config.d
 	$(INSTALL) -d -m 0755 $(TARGET_DIR)/etc/meshtasticd/available.d
 	$(INSTALL) -D -m 0644 $(@D)/bin/config-dist.yaml $(TARGET_DIR)/etc/meshtasticd/config.yaml
