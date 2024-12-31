@@ -1,6 +1,0 @@
-config BR2_PACKAGE_PYTHON_GEOGRAPHICLIB
-	bool "python-geographiclib"
-	help
-	  Python implementation of the geodesic routines in GeographicLib
-
-	  https://pypi.org/project/geographiclib
