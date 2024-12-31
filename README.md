@@ -25,19 +25,19 @@ Default credentials: `root` : `luckfox`
     export BR2_EXTERNAL /absolute/path_to/external/
 
 4. Build the image
-    
+```
     cd luckfox-pico
     ./build.sh lunch
       select #4 "RV1103_Luckfox_Pico_WebBee"
       select SPI
       select buildroot
-`   ./build.sh
-`
+ `   ./build.sh
+```
 5. Flash the image to the Mini_B's SPI
-
+```
     ./rkflash.sh erase
     ./rkflash.sh update
-
+```
 ---
 
 # What's Included?
