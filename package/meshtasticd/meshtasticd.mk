@@ -12,7 +12,9 @@
 #MESHTASTICD_VERSION = v2.5.15.79da236  # ok
 #MESHTASTICD_VERSION = v2.5.16.f81d3b0  # fails on first patch, remove patch #1, still fails now looking for gpiod dependency
 #MESHTASTICD_VERSION = v2.5.17.b4b2fd6  # adds portduino-buildroot variant. Must delete the femtofox folder from meshtasticd.asdfasdf/bin/config.d
-MESHTASTICD_VERSION = v2.5.18.89ebafc  # Must delete the femtofox folder from meshtasticd.asdfasdf/bin/config.d
+#MESHTASTICD_VERSION = v2.5.18.89ebafc  # Must delete the femtofox folder from meshtasticd.asdfasdf/bin/config.d
+#MESHTASTICD_VERSION = v2.5.19.f9876cf  #
+MESHTASTICD_VERSION = v2.5.20.4c97351  # don't use OpenWRT or frmtofox folder from meshtasticd.asdfasdf/bin/config.d
 
 
 MESHTASTICD_SITE = https://github.com/meshtastic/firmware
@@ -126,7 +128,6 @@ define MESHTASTICD_INSTALL_TARGET_CMDS
 	$(INSTALL) -d -m 0755 $(TARGET_DIR)/etc/meshtasticd/config.d
 	$(INSTALL) -d -m 0755 $(TARGET_DIR)/etc/meshtasticd/available.d
 	$(INSTALL) -D -m 0644 $(@D)/bin/config-dist.yaml $(TARGET_DIR)/etc/meshtasticd/config.yaml
-	$(INSTALL) -D -m 0644 $(@D)/bin/config.d/* $(TARGET_DIR)/etc/meshtasticd/available.d/
 	$(INSTALL) -D -m 0644 $(MESHTASTICD_PKGDIR)/config.d/* $(TARGET_DIR)/etc/meshtasticd/available.d/
 	$(MESHTASTICD_AVAHI_INSTALL_TARGET_CMDS)
 endef
