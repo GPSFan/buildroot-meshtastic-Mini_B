@@ -1,4 +1,4 @@
-# buildroot-meshtastic
+# buildroot-meshtastic-Mini_B
 
 [Buildroot](https://buildroot.org/) packaging for Meshtastic and dependencies.
 
